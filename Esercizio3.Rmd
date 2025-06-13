@@ -1,0 +1,96 @@
+---
+title: "Esercizio 3 Modelli Statistici"
+author: "Potinga Marcelinio"
+date: "`r Sys.Date()`"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+##Parte 1
+
+**Importing the txt file**
+```{r import_data}
+data <-  read.csv("https://raw.githubusercontent.com/marcel0501/Esercizi-Mod-Stat/refs/heads/main/ANTROP.TXT", sep="\t")
+data$peso <- data$peso / 2.2 # Convert pounds to kg
+```
+
+**Stattistiche descrittive**
+```{r descriptive_stats}
+summary(data)
+```
+
+**Modelli di regressione aventi X=bicipite e Y=peso con le specificazioni lineare-lineare, log-lineare, log-log, lineare log e quadratica. **
+```{r regression_models}
+# Linear model
+model_linear <- lm(peso ~ bicipite, data = data)
+# Log-linear model
+model_log_linear <- lm(log(peso) ~ bicipite, data = data)
+# Log-log model
+model_log_log <- lm(log(peso) ~ log(bicipite), data = data)
+# Linear-log model
+model_linear_log <- lm(peso ~ log(bicipite), data = data)
+# Quadratic model
+model_quadratic <- lm(peso ~ bicipite + I(bicipite^2), data = data)
+# Best model selection based on F-statistic
+models <- list(
+  linear = model_linear,
+  log_linear = model_log_linear,
+  log_log = model_log_log,
+  linear_log = model_linear_log,
+  quadratic = model_quadratic
+)
+best_model <- NULL
+best_f_stat <- -Inf
+for (model in models) {
+  f_stat <- summary(model)$fstatistic[1]
+  if (f_stat > best_f_stat) {
+    best_f_stat <- f_stat
+    best_model <- model
+  }
+}
+# Display the best model
+summary(best_model)
+# Plotting the best model
+plot(data$bicipite, data$peso, main = "Best Model: Linear Log", xlab = "Bicipite", ylab = "Peso")
+abline(best_model, col = "red")
+# Residuals plot
+plot(best_model$residuals, main = "Residuals of Best Model", ylab = "Residuals", xlab = "Index")
+# Histogram of residuals
+hist(best_model$residuals, main = "Histogram of Residuals", xlab = "Residuals", breaks = 20)
+# QQ plot of residuals
+qqnorm(best_model$residuals, main = "QQ Plot of Residuals")
+qqline(best_model$residuals, col = "red")
+#Residuals against fitted values
+plot(best_model$fitted.values, best_model$residuals, main = "Residuals vs Fitted Values", xlab = "Fitted Values", ylab = "Residuals")
+abline(h = 0, col = "red")
+plot(best_model,which=2)
+```
+
+**Verifica eteroschedasticità per ogni modello**
+
+```{r heteroscedasticity_check}
+par(mfrow = c(1, length(models)))  # 1 row, N columns
+# Plotting residuals vs fitted values for each model
+for (i in seq_along(models)) {
+  plot(fitted(models[[i]]), resid(models[[i]]),
+       main = paste("Model", names(models)[i]),
+       xlab = "Fitted", ylab = "Residuals")
+  abline(h = 0, col = "red")
+}
+# Resetting the plotting layout 
+par(mfrow = c(1, 1))
+```
+**Verifica normalità dei residui per ogni modello**
+```{r normality_check}
+par(mfrow = c(1, length(models)))  # 1 row, N columns
+# QQ plot for each model
+for (i in seq_along(models)) {
+  qqnorm(resid(models[[i]]), main = paste("QQ Plot of Residuals -", names(models)[i]))
+  qqline(resid(models[[i]]), col = "red")
+}
+# Resetting the plotting layout
+par(mfrow = c(1, 1))
+```
