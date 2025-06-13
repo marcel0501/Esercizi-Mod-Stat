@@ -71,5 +71,8 @@ abline(v=0, col='red')
 lm2<-lm(fare ~ concen,data)
 anova(lm2,lm1)
 ```
-
 Il grafico mostra l'intervallo di confidenza congiunto per i coefficienti di `dist` e `passen`. La regione ellittica rappresenta l'insieme dei valori plausibili per i coefficienti a un livello di confidenza del 95%. Il punto rappresenta le stime dei coefficienti del modello. Le linee tratteggiate indicano gli intervalli di confidenza per ciascun coefficiente. Poiché il punto non si trova all'interno della regione definita dagli intervalli di confidenza, possiamo rifiutare l'ipotesi nulla che entrambi i coefficienti siano zero.
+
+
+
+
