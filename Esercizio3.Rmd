@@ -94,3 +94,75 @@ for (i in seq_along(models)) {
 # Resetting the plotting layout
 par(mfrow = c(1, 1))
 ```
+
+#Parte 2
+```{r import_dataset}
+data2 <- read.csv("https://raw.githubusercontent.com/marcel0501/Esercizi-Mod-Stat/refs/heads/main/nazioni.csv", sep=";")
+summary(data2)
+numeric_data <- unlist(lapply(data2, is.numeric))
+library(psych)
+library(corrplot)
+pairs.panels(data2[,numeric_data],lm=T)
+corrplot(cor(data2[,numeric_data]), method="number" )
+```
+
+#Regressione di PIL su densita, urbana, vitamas, vitafem e relig
+```{r lin_regression}
+data2$relig <- factor(data2$relig)
+lin_mod1 <- lm(pil ~ densita + urbana + vitamas + vitafem + relig, data = data2)
+summary(lin_mod1)
+# Studio della multicollinearita'
+library(car)
+vif_values <- vif(lin_mod1)
+vif_values
+
+# Si noti che la variabile "vitamas" e "vitafem" hanno un VIF molto alto, suggerendo multicollinearità, proviamo ad eliminare una delle due variabili.
+lin_mod2 <- lm(pil ~ densita + urbana + vitafem + relig, data = data2)
+summary(lin_mod2)
+vif_values2 <- vif(lin_mod2)
+vif_values2
+
+# Selezione del modello parsimonioso utilizzando il test F
+anova(lin_mod1, lin_mod2)
+# Releveling the factor variable "relig"
+data2$relig <- relevel(data2$relig, ref = "Prot")
+lin_mod2_relevel <- lm(pil ~ densita + urbana + vitafem + relig, data = data2)
+summary(lin_mod2_relevel)
+
+# Eliminiamo la variabile urbana
+lin_mod3 <- lm(pil ~ densita + vitafem + relig, data = data2)
+anova(lin_mod3, lin_mod2_relevel)
+summary(lin_mod3)
+
+# Eliminiamo la variabile densita
+
+lin_mod4 <- lm(pil ~ vitafem + relig, data = data2)
+summary(lin_mod4)
+```
+Il Modello con la statistica F piu alta e' il modello 4, che include solo le variabili vitafem e relig. Cerchiamo di migliorarlo trovando punti outlier.
+```{r outlier_detection}
+library(ggplot2)
+# Calcolo dei residui standardizzati
+data2$residuals <- residuals(lin_mod4)
+data2$std_residuals <- rstandard(lin_mod4)
+# Creazione del boxplot dei residui standardizzati
+ggplot(data2, aes(x = "", y = std_residuals)) +
+  geom_boxplot() +
+  labs(title = "Boxplot dei Residui Standardizzati", y = "Residui Standardizzati") +
+  theme_minimal()
+# Identificazione degli outlier
+outliers <- data2[abs(data2$std_residuals) > 2, ]
+outliers
+# Rimozione degli outlier dal dataset
+data2_no_outliers <- data2[abs(data2$std_residuals) <= 2, ]
+# Ricalcolo del modello senza outlier
+lin_mod4_no_outliers <- lm(pil ~ vitafem + relig, data = data2_no_outliers)
+summary(lin_mod4_no_outliers)
+```
+#A partire dal modello al punto c calcolare il PIL predetto per una nazione a prevalenza cattolica con aspettativa di vita pari a 82 anni
+```{r predicted_pil}
+new_data <- data.frame(vitafem = 82, relig = "Catt")
+predicted_pil <- predict(lin_mod4_no_outliers, newdata = new_data)
+predicted_pil
+```
+
