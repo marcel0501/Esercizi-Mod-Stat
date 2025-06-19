@@ -1,0 +1,44 @@
+---
+title: "Es.4"
+author: "Marcelinio Potinga"
+date: "2025-06-19"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+#Importazione del dataset e check delle statistiche descrittive
+```{r import_data}
+url <- "https://raw.githubusercontent.com/marcel0501/Esercizi-Mod-Stat/refs/heads/main/studenti.txt"
+data <- read.table(url, header = TRUE)
+data$N <- NULL  # Rimuovere la colonna NUL
+data$genere<-factor(data$genere, levels = c(0,1), labels=c("M","F"))
+data$fumo<-factor(data$fumo, levels=c(0,1) , labels=c("NF","F") )
+summary(data)
+library(psych)
+numeric <- unlist(lapply(data, is.numeric))
+pairs.panels(data[c("altezza","peso", "eta", "componenti")], lm = TRUE)
+Corr <- cor(data[, numeric])
+corrplot(Corr)
+
+table(data$fumo, data$genere)
+prop.table(table(data$fumo, data$genere))
+prop.table(table(data$fumo, data$genere),margin=1)
+prop.table(table(data$fumo, data$genere), margin=2)
+```
+
+#Regressione logistica, interpretazione dei coefficienti, selezione del modello  e test sull'abitudine al fumo in relazione all'età, al numero di componenti , al genere e al periodo di rilevazione
+```{r logistic_regression}
+m1<-glm(fumo~genere+componenti+eta, data,family="binomial")
+summary(m1)
+```
+#Interpretazione dei coefficienti:
+- L'odds di fumare per le donne è il 1-exp(-0.32676) più basso rispetto a quello degli uomini.  
+- L'odds di fumare cresce del 3% per ogni anno di età. Non e statisticamente significativo.
+- L'odds di fumare si abbassa del 4.9% per ogni componente familiare.
+```{r logistic_regression}
+m1<-glm(fumo~genere+componenti+eta+I(eta^2), data,family="binomial")
+summary(m1)
+```

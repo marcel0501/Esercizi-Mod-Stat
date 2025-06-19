@@ -1,0 +1,736 @@
+% Options for packages loaded elsewhere
+\PassOptionsToPackage{unicode}{hyperref}
+\PassOptionsToPackage{hyphens}{url}
+%
+\documentclass[
+]{article}
+\usepackage{amsmath,amssymb}
+\usepackage{iftex}
+\ifPDFTeX
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+  \usepackage{textcomp} % provide euro and other symbols
+\else % if luatex or xetex
+  \usepackage{unicode-math} % this also loads fontspec
+  \defaultfontfeatures{Scale=MatchLowercase}
+  \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
+\fi
+\usepackage{lmodern}
+\ifPDFTeX\else
+  % xetex/luatex font selection
+\fi
+% Use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\IfFileExists{microtype.sty}{% use microtype if available
+  \usepackage[]{microtype}
+  \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\makeatletter
+\@ifundefined{KOMAClassName}{% if non-KOMA class
+  \IfFileExists{parskip.sty}{%
+    \usepackage{parskip}
+  }{% else
+    \setlength{\parindent}{0pt}
+    \setlength{\parskip}{6pt plus 2pt minus 1pt}}
+}{% if KOMA class
+  \KOMAoptions{parskip=half}}
+\makeatother
+\usepackage{xcolor}
+\usepackage[margin=1in]{geometry}
+\usepackage{color}
+\usepackage{fancyvrb}
+\newcommand{\VerbBar}{|}
+\newcommand{\VERB}{\Verb[commandchars=\\\{\}]}
+\DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+% Add ',fontsize=\small' for more characters per line
+\usepackage{framed}
+\definecolor{shadecolor}{RGB}{248,248,248}
+\newenvironment{Shaded}{\begin{snugshade}}{\end{snugshade}}
+\newcommand{\AlertTok}[1]{\textcolor[rgb]{0.94,0.16,0.16}{#1}}
+\newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{#1}}
+\newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\BuiltInTok}[1]{#1}
+\newcommand{\CharTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\CommentTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
+\newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{#1}}
+\newcommand{\DecValTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ErrorTok}[1]{\textcolor[rgb]{0.64,0.00,0.00}{\textbf{#1}}}
+\newcommand{\ExtensionTok}[1]{#1}
+\newcommand{\FloatTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\ImportTok}[1]{#1}
+\newcommand{\InformationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\NormalTok}[1]{#1}
+\newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.81,0.36,0.00}{\textbf{#1}}}
+\newcommand{\OtherTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
+\newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\RegionMarkerTok}[1]{#1}
+\newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.81,0.36,0.00}{\textbf{#1}}}
+\newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\StringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\VariableTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\WarningTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\usepackage{graphicx}
+\makeatletter
+\newsavebox\pandoc@box
+\newcommand*\pandocbounded[1]{% scales image to fit in text height/width
+  \sbox\pandoc@box{#1}%
+  \Gscale@div\@tempa{\textheight}{\dimexpr\ht\pandoc@box+\dp\pandoc@box\relax}%
+  \Gscale@div\@tempb{\linewidth}{\wd\pandoc@box}%
+  \ifdim\@tempb\p@<\@tempa\p@\let\@tempa\@tempb\fi% select the smaller of both
+  \ifdim\@tempa\p@<\p@\scalebox{\@tempa}{\usebox\pandoc@box}%
+  \else\usebox{\pandoc@box}%
+  \fi%
+}
+% Set default figure placement to htbp
+\def\fps@figure{htbp}
+\makeatother
+\setlength{\emergencystretch}{3em} % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\setcounter{secnumdepth}{-\maxdimen} % remove section numbering
+\usepackage{bookmark}
+\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
+\urlstyle{same}
+\hypersetup{
+  pdftitle={Esercizio 3 Modelli Statistici},
+  pdfauthor={Potinga Marcelinio},
+  hidelinks,
+  pdfcreator={LaTeX via pandoc}}
+
+\title{Esercizio 3 Modelli Statistici}
+\author{Potinga Marcelinio}
+\date{2025-06-19}
+
+\begin{document}
+\maketitle
+
+\#\#Parte 1
+
+\textbf{Importing the txt file}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{data }\OtherTok{\textless{}{-}}  \FunctionTok{read.csv}\NormalTok{(}\StringTok{"https://raw.githubusercontent.com/marcel0501/Esercizi{-}Mod{-}Stat/refs/heads/main/ANTROP.TXT"}\NormalTok{, }\AttributeTok{sep=}\StringTok{"}\SpecialCharTok{\textbackslash{}t}\StringTok{"}\NormalTok{)}
+\NormalTok{data}\SpecialCharTok{$}\NormalTok{peso }\OtherTok{\textless{}{-}}\NormalTok{ data}\SpecialCharTok{$}\NormalTok{peso }\SpecialCharTok{/} \FloatTok{2.2} \CommentTok{\# Convert pounds to kg}
+\end{Highlighting}
+\end{Shaded}
+
+\textbf{Stattistiche descrittive}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{summary}\NormalTok{(data)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##     id_sogg            eta             peso            altez      
+##  Min.   :  1.00   Min.   :22.00   Min.   : 53.86   Min.   :162.6  
+##  1st Qu.: 65.75   1st Qu.:35.75   1st Qu.: 71.90   1st Qu.:173.4  
+##  Median :128.50   Median :43.00   Median : 80.06   Median :177.8  
+##  Mean   :127.74   Mean   :44.85   Mean   : 80.96   Mean   :178.6  
+##  3rd Qu.:190.25   3rd Qu.:54.00   3rd Qu.: 89.46   3rd Qu.:183.5  
+##  Max.   :252.00   Max.   :81.00   Max.   :119.43   Max.   :197.5  
+##      collo           torace           addom             anca       
+##  Min.   :31.10   Min.   : 79.30   Min.   : 69.40   Min.   : 85.00  
+##  1st Qu.:36.38   1st Qu.: 94.15   1st Qu.: 84.47   1st Qu.: 95.47  
+##  Median :38.00   Median : 99.60   Median : 90.95   Median : 99.30  
+##  Mean   :37.95   Mean   :100.67   Mean   : 92.31   Mean   : 99.66  
+##  3rd Qu.:39.42   3rd Qu.:105.30   3rd Qu.: 99.20   3rd Qu.:103.28  
+##  Max.   :43.90   Max.   :128.30   Max.   :126.20   Max.   :125.60  
+##      coscia         ginocch         caviglia        bicipite    
+##  Min.   :47.20   Min.   :33.00   Min.   :19.10   Min.   :24.80  
+##  1st Qu.:56.00   1st Qu.:36.90   1st Qu.:22.00   1st Qu.:30.20  
+##  Median :59.00   Median :38.45   Median :22.80   Median :32.00  
+##  Mean   :59.27   Mean   :38.54   Mean   :22.99   Mean   :32.22  
+##  3rd Qu.:62.30   3rd Qu.:39.90   3rd Qu.:24.00   3rd Qu.:34.33  
+##  Max.   :74.40   Max.   :46.00   Max.   :27.00   Max.   :39.10  
+##      avanbr          polso      
+##  Min.   :21.00   Min.   :15.80  
+##  1st Qu.:27.30   1st Qu.:17.60  
+##  Median :28.75   Median :18.30  
+##  Mean   :28.67   Mean   :18.22  
+##  3rd Qu.:30.00   3rd Qu.:18.80  
+##  Max.   :34.90   Max.   :21.40
+\end{verbatim}
+
+\textbf{Modelli di regressione aventi X=bicipite e Y=peso con le
+specificazioni lineare-lineare, log-lineare, log-log, lineare log e
+quadratica. }
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Linear model}
+\NormalTok{model\_linear }\OtherTok{\textless{}{-}} \FunctionTok{lm}\NormalTok{(peso }\SpecialCharTok{\textasciitilde{}}\NormalTok{ bicipite, }\AttributeTok{data =}\NormalTok{ data)}
+\CommentTok{\# Log{-}linear model}
+\NormalTok{model\_log\_linear }\OtherTok{\textless{}{-}} \FunctionTok{lm}\NormalTok{(}\FunctionTok{log}\NormalTok{(peso) }\SpecialCharTok{\textasciitilde{}}\NormalTok{ bicipite, }\AttributeTok{data =}\NormalTok{ data)}
+\CommentTok{\# Log{-}log model}
+\NormalTok{model\_log\_log }\OtherTok{\textless{}{-}} \FunctionTok{lm}\NormalTok{(}\FunctionTok{log}\NormalTok{(peso) }\SpecialCharTok{\textasciitilde{}} \FunctionTok{log}\NormalTok{(bicipite), }\AttributeTok{data =}\NormalTok{ data)}
+\CommentTok{\# Linear{-}log model}
+\NormalTok{model\_linear\_log }\OtherTok{\textless{}{-}} \FunctionTok{lm}\NormalTok{(peso }\SpecialCharTok{\textasciitilde{}} \FunctionTok{log}\NormalTok{(bicipite), }\AttributeTok{data =}\NormalTok{ data)}
+\CommentTok{\# Quadratic model}
+\NormalTok{model\_quadratic }\OtherTok{\textless{}{-}} \FunctionTok{lm}\NormalTok{(peso }\SpecialCharTok{\textasciitilde{}}\NormalTok{ bicipite }\SpecialCharTok{+} \FunctionTok{I}\NormalTok{(bicipite}\SpecialCharTok{\^{}}\DecValTok{2}\NormalTok{), }\AttributeTok{data =}\NormalTok{ data)}
+\CommentTok{\# Best model selection based on F{-}statistic}
+\NormalTok{models }\OtherTok{\textless{}{-}} \FunctionTok{list}\NormalTok{(}
+  \AttributeTok{linear =}\NormalTok{ model\_linear,}
+  \AttributeTok{log\_linear =}\NormalTok{ model\_log\_linear,}
+  \AttributeTok{log\_log =}\NormalTok{ model\_log\_log,}
+  \AttributeTok{linear\_log =}\NormalTok{ model\_linear\_log,}
+  \AttributeTok{quadratic =}\NormalTok{ model\_quadratic}
+\NormalTok{)}
+\NormalTok{best\_model }\OtherTok{\textless{}{-}} \ConstantTok{NULL}
+\NormalTok{best\_f\_stat }\OtherTok{\textless{}{-}} \SpecialCharTok{{-}}\ConstantTok{Inf}
+\ControlFlowTok{for}\NormalTok{ (model }\ControlFlowTok{in}\NormalTok{ models) \{}
+\NormalTok{  f\_stat }\OtherTok{\textless{}{-}} \FunctionTok{summary}\NormalTok{(model)}\SpecialCharTok{$}\NormalTok{fstatistic[}\DecValTok{1}\NormalTok{]}
+  \ControlFlowTok{if}\NormalTok{ (f\_stat }\SpecialCharTok{\textgreater{}}\NormalTok{ best\_f\_stat) \{}
+\NormalTok{    best\_f\_stat }\OtherTok{\textless{}{-}}\NormalTok{ f\_stat}
+\NormalTok{    best\_model }\OtherTok{\textless{}{-}}\NormalTok{ model}
+\NormalTok{  \}}
+\NormalTok{\}}
+\CommentTok{\# Display the best model}
+\FunctionTok{summary}\NormalTok{(best\_model)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+## Call:
+## lm(formula = log(peso) ~ bicipite, data = data)
+## 
+## Residuals:
+##      Min       1Q   Median       3Q      Max 
+## -0.39827 -0.05684  0.00154  0.06145  0.22972 
+## 
+## Coefficients:
+##             Estimate Std. Error t value Pr(>|t|)    
+## (Intercept) 3.069505   0.065864   46.60   <2e-16 ***
+## bicipite    0.040756   0.002036   20.02   <2e-16 ***
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## Residual standard error: 0.09389 on 246 degrees of freedom
+## Multiple R-squared:  0.6196, Adjusted R-squared:  0.618 
+## F-statistic: 400.7 on 1 and 246 DF,  p-value: < 2.2e-16
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Plotting the best model}
+\FunctionTok{plot}\NormalTok{(data}\SpecialCharTok{$}\NormalTok{bicipite, data}\SpecialCharTok{$}\NormalTok{peso, }\AttributeTok{main =} \StringTok{"Best Model: Linear Log"}\NormalTok{, }\AttributeTok{xlab =} \StringTok{"Bicipite"}\NormalTok{, }\AttributeTok{ylab =} \StringTok{"Peso"}\NormalTok{)}
+\FunctionTok{abline}\NormalTok{(best\_model, }\AttributeTok{col =} \StringTok{"red"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\pandocbounded{\includegraphics[keepaspectratio]{Esercizio3_files/figure-latex/regression_models-1.pdf}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Residuals plot}
+\FunctionTok{plot}\NormalTok{(best\_model}\SpecialCharTok{$}\NormalTok{residuals, }\AttributeTok{main =} \StringTok{"Residuals of Best Model"}\NormalTok{, }\AttributeTok{ylab =} \StringTok{"Residuals"}\NormalTok{, }\AttributeTok{xlab =} \StringTok{"Index"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\pandocbounded{\includegraphics[keepaspectratio]{Esercizio3_files/figure-latex/regression_models-2.pdf}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Histogram of residuals}
+\FunctionTok{hist}\NormalTok{(best\_model}\SpecialCharTok{$}\NormalTok{residuals, }\AttributeTok{main =} \StringTok{"Histogram of Residuals"}\NormalTok{, }\AttributeTok{xlab =} \StringTok{"Residuals"}\NormalTok{, }\AttributeTok{breaks =} \DecValTok{20}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\pandocbounded{\includegraphics[keepaspectratio]{Esercizio3_files/figure-latex/regression_models-3.pdf}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# QQ plot of residuals}
+\FunctionTok{qqnorm}\NormalTok{(best\_model}\SpecialCharTok{$}\NormalTok{residuals, }\AttributeTok{main =} \StringTok{"QQ Plot of Residuals"}\NormalTok{)}
+\FunctionTok{qqline}\NormalTok{(best\_model}\SpecialCharTok{$}\NormalTok{residuals, }\AttributeTok{col =} \StringTok{"red"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\pandocbounded{\includegraphics[keepaspectratio]{Esercizio3_files/figure-latex/regression_models-4.pdf}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\#Residuals against fitted values}
+\FunctionTok{plot}\NormalTok{(best\_model}\SpecialCharTok{$}\NormalTok{fitted.values, best\_model}\SpecialCharTok{$}\NormalTok{residuals, }\AttributeTok{main =} \StringTok{"Residuals vs Fitted Values"}\NormalTok{, }\AttributeTok{xlab =} \StringTok{"Fitted Values"}\NormalTok{, }\AttributeTok{ylab =} \StringTok{"Residuals"}\NormalTok{)}
+\FunctionTok{abline}\NormalTok{(}\AttributeTok{h =} \DecValTok{0}\NormalTok{, }\AttributeTok{col =} \StringTok{"red"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\pandocbounded{\includegraphics[keepaspectratio]{Esercizio3_files/figure-latex/regression_models-5.pdf}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{plot}\NormalTok{(best\_model,}\AttributeTok{which=}\DecValTok{2}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\pandocbounded{\includegraphics[keepaspectratio]{Esercizio3_files/figure-latex/regression_models-6.pdf}}
+
+\textbf{Verifica eteroschedasticità per ogni modello}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{par}\NormalTok{(}\AttributeTok{mfrow =} \FunctionTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{, }\FunctionTok{length}\NormalTok{(models)))  }\CommentTok{\# 1 row, N columns}
+\CommentTok{\# Plotting residuals vs fitted values for each model}
+\ControlFlowTok{for}\NormalTok{ (i }\ControlFlowTok{in} \FunctionTok{seq\_along}\NormalTok{(models)) \{}
+  \FunctionTok{plot}\NormalTok{(}\FunctionTok{fitted}\NormalTok{(models[[i]]), }\FunctionTok{resid}\NormalTok{(models[[i]]),}
+       \AttributeTok{main =} \FunctionTok{paste}\NormalTok{(}\StringTok{"Model"}\NormalTok{, }\FunctionTok{names}\NormalTok{(models)[i]),}
+       \AttributeTok{xlab =} \StringTok{"Fitted"}\NormalTok{, }\AttributeTok{ylab =} \StringTok{"Residuals"}\NormalTok{)}
+  \FunctionTok{abline}\NormalTok{(}\AttributeTok{h =} \DecValTok{0}\NormalTok{, }\AttributeTok{col =} \StringTok{"red"}\NormalTok{)}
+\NormalTok{\}}
+\end{Highlighting}
+\end{Shaded}
+
+\pandocbounded{\includegraphics[keepaspectratio]{Esercizio3_files/figure-latex/heteroscedasticity_check-1.pdf}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Resetting the plotting layout }
+\FunctionTok{par}\NormalTok{(}\AttributeTok{mfrow =} \FunctionTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{, }\DecValTok{1}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+\textbf{Verifica normalità dei residui per ogni modello}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{par}\NormalTok{(}\AttributeTok{mfrow =} \FunctionTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{, }\FunctionTok{length}\NormalTok{(models)))  }\CommentTok{\# 1 row, N columns}
+\CommentTok{\# QQ plot for each model}
+\ControlFlowTok{for}\NormalTok{ (i }\ControlFlowTok{in} \FunctionTok{seq\_along}\NormalTok{(models)) \{}
+  \FunctionTok{qqnorm}\NormalTok{(}\FunctionTok{resid}\NormalTok{(models[[i]]), }\AttributeTok{main =} \FunctionTok{paste}\NormalTok{(}\StringTok{"QQ Plot of Residuals {-}"}\NormalTok{, }\FunctionTok{names}\NormalTok{(models)[i]))}
+  \FunctionTok{qqline}\NormalTok{(}\FunctionTok{resid}\NormalTok{(models[[i]]), }\AttributeTok{col =} \StringTok{"red"}\NormalTok{)}
+\NormalTok{\}}
+\end{Highlighting}
+\end{Shaded}
+
+\pandocbounded{\includegraphics[keepaspectratio]{Esercizio3_files/figure-latex/normality_check-1.pdf}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Resetting the plotting layout}
+\FunctionTok{par}\NormalTok{(}\AttributeTok{mfrow =} \FunctionTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{, }\DecValTok{1}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+\#Parte 2
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{data2 }\OtherTok{\textless{}{-}} \FunctionTok{read.csv}\NormalTok{(}\StringTok{"https://raw.githubusercontent.com/marcel0501/Esercizi{-}Mod{-}Stat/refs/heads/main/nazioni.csv"}\NormalTok{, }\AttributeTok{sep=}\StringTok{";"}\NormalTok{)}
+\FunctionTok{summary}\NormalTok{(data2)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##    nazione             densita           urbana         vitafem     
+##  Length:66          Min.   :  2.00   Min.   : 5.00   Min.   :43.00  
+##  Class :character   1st Qu.: 19.75   1st Qu.:49.50   1st Qu.:70.00  
+##  Mode  :character   Median : 61.00   Median :64.50   Median :76.00  
+##                     Mean   :100.15   Mean   :62.18   Mean   :72.74  
+##                     3rd Qu.:122.25   3rd Qu.:75.00   3rd Qu.:79.00  
+##                     Max.   :605.00   Max.   :96.00   Max.   :82.00  
+##     vitamas         alfabet            pil           relig          
+##  Min.   :41.00   Min.   : 27.00   Min.   :  208   Length:66         
+##  1st Qu.:64.00   1st Qu.: 83.50   1st Qu.: 1412   Class :character  
+##  Median :69.00   Median : 95.50   Median : 4464   Mode  :character  
+##  Mean   :66.58   Mean   : 87.58   Mean   : 7303                     
+##  3rd Qu.:73.00   3rd Qu.: 99.00   3rd Qu.:14048                     
+##  Max.   :76.00   Max.   :100.00   Max.   :23474
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{numeric\_data }\OtherTok{\textless{}{-}} \FunctionTok{unlist}\NormalTok{(}\FunctionTok{lapply}\NormalTok{(data2, is.numeric))}
+\FunctionTok{library}\NormalTok{(psych)}
+\FunctionTok{library}\NormalTok{(corrplot)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## corrplot 0.95 loaded
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{pairs.panels}\NormalTok{(data2[,numeric\_data],}\AttributeTok{lm=}\NormalTok{T)}
+\end{Highlighting}
+\end{Shaded}
+
+\pandocbounded{\includegraphics[keepaspectratio]{Esercizio3_files/figure-latex/import_dataset-1.pdf}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{corrplot}\NormalTok{(}\FunctionTok{cor}\NormalTok{(data2[,numeric\_data]), }\AttributeTok{method=}\StringTok{"number"}\NormalTok{ )}
+\end{Highlighting}
+\end{Shaded}
+
+\pandocbounded{\includegraphics[keepaspectratio]{Esercizio3_files/figure-latex/import_dataset-2.pdf}}
+
+\#Regressione di PIL su densita, urbana, vitamas, vitafem e relig
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{data2}\SpecialCharTok{$}\NormalTok{relig }\OtherTok{\textless{}{-}} \FunctionTok{factor}\NormalTok{(data2}\SpecialCharTok{$}\NormalTok{relig)}
+\NormalTok{lin\_mod1 }\OtherTok{\textless{}{-}} \FunctionTok{lm}\NormalTok{(pil }\SpecialCharTok{\textasciitilde{}}\NormalTok{ densita }\SpecialCharTok{+}\NormalTok{ urbana }\SpecialCharTok{+}\NormalTok{ vitamas }\SpecialCharTok{+}\NormalTok{ vitafem }\SpecialCharTok{+}\NormalTok{ relig, }\AttributeTok{data =}\NormalTok{ data2)}
+\FunctionTok{summary}\NormalTok{(lin\_mod1)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+## Call:
+## lm(formula = pil ~ densita + urbana + vitamas + vitafem + relig, 
+##     data = data2)
+## 
+## Residuals:
+##     Min      1Q  Median      3Q     Max 
+## -8349.1 -4095.2  -427.7  3179.3 12393.0 
+## 
+## Coefficients:
+##               Estimate Std. Error t value Pr(>|t|)    
+## (Intercept) -22307.515   5083.548  -4.388  4.8e-05 ***
+## densita          5.330      5.742   0.928   0.3571    
+## urbana          34.228     49.840   0.687   0.4949    
+## vitamas         63.817    403.937   0.158   0.8750    
+## vitafem        298.587    383.252   0.779   0.4390    
+## religOrt     -2314.804   2065.689  -1.121   0.2670    
+## religProt     4893.455   1568.372   3.120   0.0028 ** 
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## Residual standard error: 5127 on 59 degrees of freedom
+## Multiple R-squared:  0.5122, Adjusted R-squared:  0.4626 
+## F-statistic: 10.33 on 6 and 59 DF,  p-value: 8.513e-08
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Studio della multicollinearita\textquotesingle{}}
+\FunctionTok{library}\NormalTok{(car)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Loading required package: carData
+\end{verbatim}
+
+\begin{verbatim}
+## 
+## Attaching package: 'car'
+\end{verbatim}
+
+\begin{verbatim}
+## The following object is masked from 'package:psych':
+## 
+##     logit
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{vif\_values }\OtherTok{\textless{}{-}} \FunctionTok{vif}\NormalTok{(lin\_mod1)}
+\NormalTok{vif\_values}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##              GVIF Df GVIF^(1/(2*Df))
+## densita  1.083080  1        1.040711
+## urbana   2.545468  1        1.595452
+## vitamas 34.290505  1        5.855810
+## vitafem 37.487429  1        6.122698
+## relig    1.234200  2        1.054014
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Si noti che la variabile "vitamas" e "vitafem" hanno un VIF molto alto, suggerendo multicollinearità, proviamo ad eliminare una delle due variabili.}
+\NormalTok{lin\_mod2 }\OtherTok{\textless{}{-}} \FunctionTok{lm}\NormalTok{(pil }\SpecialCharTok{\textasciitilde{}}\NormalTok{ densita }\SpecialCharTok{+}\NormalTok{ urbana }\SpecialCharTok{+}\NormalTok{ vitafem }\SpecialCharTok{+}\NormalTok{ relig, }\AttributeTok{data =}\NormalTok{ data2)}
+\FunctionTok{summary}\NormalTok{(lin\_mod2)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+## Call:
+## lm(formula = pil ~ densita + urbana + vitafem + relig, data = data2)
+## 
+## Residuals:
+##     Min      1Q  Median      3Q     Max 
+## -8340.0 -4088.5  -465.3  3153.9 12372.6 
+## 
+## Coefficients:
+##               Estimate Std. Error t value Pr(>|t|)    
+## (Intercept) -22269.748   5036.496  -4.422 4.18e-05 ***
+## densita          5.444      5.650   0.964 0.339162    
+## urbana          33.245     49.046   0.678 0.500493    
+## vitafem        357.250     94.121   3.796 0.000345 ***
+## religOrt     -2394.190   1987.295  -1.205 0.233031    
+## religProt     4904.674   1553.981   3.156 0.002500 ** 
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## Residual standard error: 5085 on 60 degrees of freedom
+## Multiple R-squared:  0.512,  Adjusted R-squared:  0.4714 
+## F-statistic: 12.59 on 5 and 60 DF,  p-value: 2.262e-08
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{vif\_values2 }\OtherTok{\textless{}{-}} \FunctionTok{vif}\NormalTok{(lin\_mod2)}
+\NormalTok{vif\_values2}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##             GVIF Df GVIF^(1/(2*Df))
+## densita 1.065925  1        1.032436
+## urbana  2.505784  1        1.582967
+## vitafem 2.298318  1        1.516020
+## relig   1.150089  2        1.035578
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Selezione del modello parsimonioso utilizzando il test F}
+\FunctionTok{anova}\NormalTok{(lin\_mod1, lin\_mod2)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Analysis of Variance Table
+## 
+## Model 1: pil ~ densita + urbana + vitamas + vitafem + relig
+## Model 2: pil ~ densita + urbana + vitafem + relig
+##   Res.Df        RSS Df Sum of Sq     F Pr(>F)
+## 1     59 1550842350                          
+## 2     60 1551498433 -1   -656083 0.025  0.875
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Releveling the factor variable "relig"}
+\NormalTok{data2}\SpecialCharTok{$}\NormalTok{relig }\OtherTok{\textless{}{-}} \FunctionTok{relevel}\NormalTok{(data2}\SpecialCharTok{$}\NormalTok{relig, }\AttributeTok{ref =} \StringTok{"Prot"}\NormalTok{)}
+\NormalTok{lin\_mod2\_relevel }\OtherTok{\textless{}{-}} \FunctionTok{lm}\NormalTok{(pil }\SpecialCharTok{\textasciitilde{}}\NormalTok{ densita }\SpecialCharTok{+}\NormalTok{ urbana }\SpecialCharTok{+}\NormalTok{ vitafem }\SpecialCharTok{+}\NormalTok{ relig, }\AttributeTok{data =}\NormalTok{ data2)}
+\FunctionTok{summary}\NormalTok{(lin\_mod2\_relevel)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+## Call:
+## lm(formula = pil ~ densita + urbana + vitafem + relig, data = data2)
+## 
+## Residuals:
+##     Min      1Q  Median      3Q     Max 
+## -8340.0 -4088.5  -465.3  3153.9 12372.6 
+## 
+## Coefficients:
+##               Estimate Std. Error t value Pr(>|t|)    
+## (Intercept) -17365.075   5102.954  -3.403 0.001193 ** 
+## densita          5.444      5.650   0.964 0.339162    
+## urbana          33.245     49.046   0.678 0.500493    
+## vitafem        357.250     94.121   3.796 0.000345 ***
+## religCatt    -4904.674   1553.981  -3.156 0.002500 ** 
+## religOrt     -7298.864   2246.211  -3.249 0.001897 ** 
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## Residual standard error: 5085 on 60 degrees of freedom
+## Multiple R-squared:  0.512,  Adjusted R-squared:  0.4714 
+## F-statistic: 12.59 on 5 and 60 DF,  p-value: 2.262e-08
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Eliminiamo la variabile urbana}
+\NormalTok{lin\_mod3 }\OtherTok{\textless{}{-}} \FunctionTok{lm}\NormalTok{(pil }\SpecialCharTok{\textasciitilde{}}\NormalTok{ densita }\SpecialCharTok{+}\NormalTok{ vitafem }\SpecialCharTok{+}\NormalTok{ relig, }\AttributeTok{data =}\NormalTok{ data2)}
+\FunctionTok{anova}\NormalTok{(lin\_mod3, lin\_mod2\_relevel)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Analysis of Variance Table
+## 
+## Model 1: pil ~ densita + vitafem + relig
+## Model 2: pil ~ densita + urbana + vitafem + relig
+##   Res.Df        RSS Df Sum of Sq      F Pr(>F)
+## 1     61 1563378712                           
+## 2     60 1551498433  1  11880279 0.4594 0.5005
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{summary}\NormalTok{(lin\_mod3)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+## Call:
+## lm(formula = pil ~ densita + vitafem + relig, data = data2)
+## 
+## Residuals:
+##     Min      1Q  Median      3Q     Max 
+## -8953.4 -4091.8  -689.5  2931.8 12073.1 
+## 
+## Coefficients:
+##               Estimate Std. Error t value Pr(>|t|)    
+## (Intercept) -18418.388   4839.001  -3.806 0.000330 ***
+## densita          4.548      5.469   0.832 0.408878    
+## vitafem        404.747     62.559   6.470 1.87e-08 ***
+## religCatt    -5233.106   1469.951  -3.560 0.000725 ***
+## religOrt     -7635.241   2180.976  -3.501 0.000873 ***
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## Residual standard error: 5063 on 61 degrees of freedom
+## Multiple R-squared:  0.5083, Adjusted R-squared:  0.476 
+## F-statistic: 15.76 on 4 and 61 DF,  p-value: 6.53e-09
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Eliminiamo la variabile densita}
+
+\NormalTok{lin\_mod4 }\OtherTok{\textless{}{-}} \FunctionTok{lm}\NormalTok{(pil }\SpecialCharTok{\textasciitilde{}}\NormalTok{ vitafem }\SpecialCharTok{+}\NormalTok{ relig, }\AttributeTok{data =}\NormalTok{ data2)}
+\FunctionTok{summary}\NormalTok{(lin\_mod4)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+## Call:
+## lm(formula = pil ~ vitafem + relig, data = data2)
+## 
+## Residuals:
+##     Min      1Q  Median      3Q     Max 
+## -6991.8 -4017.1  -605.6  3089.0 12392.9 
+## 
+## Coefficients:
+##             Estimate Std. Error t value Pr(>|t|)    
+## (Intercept) -17885.4     4784.4  -3.738 0.000406 ***
+## vitafem        404.3       62.4   6.480  1.7e-08 ***
+## religCatt    -5278.4     1465.3  -3.602 0.000629 ***
+## religOrt     -7790.8     2167.5  -3.594 0.000645 ***
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## Residual standard error: 5050 on 62 degrees of freedom
+## Multiple R-squared:  0.5027, Adjusted R-squared:  0.4786 
+## F-statistic: 20.89 on 3 and 62 DF,  p-value: 1.801e-09
+\end{verbatim}
+
+Il Modello con la statistica F piu alta e' il modello 4, che include
+solo le variabili vitafem e relig. Cerchiamo di migliorarlo trovando
+punti outlier.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(ggplot2)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+## Attaching package: 'ggplot2'
+\end{verbatim}
+
+\begin{verbatim}
+## The following objects are masked from 'package:psych':
+## 
+##     %+%, alpha
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Calcolo dei residui standardizzati}
+\NormalTok{data2}\SpecialCharTok{$}\NormalTok{residuals }\OtherTok{\textless{}{-}} \FunctionTok{residuals}\NormalTok{(lin\_mod4)}
+\NormalTok{data2}\SpecialCharTok{$}\NormalTok{std\_residuals }\OtherTok{\textless{}{-}} \FunctionTok{rstandard}\NormalTok{(lin\_mod4)}
+\CommentTok{\# Creazione del boxplot dei residui standardizzati}
+\FunctionTok{ggplot}\NormalTok{(data2, }\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =} \StringTok{""}\NormalTok{, }\AttributeTok{y =}\NormalTok{ std\_residuals)) }\SpecialCharTok{+}
+  \FunctionTok{geom\_boxplot}\NormalTok{() }\SpecialCharTok{+}
+  \FunctionTok{labs}\NormalTok{(}\AttributeTok{title =} \StringTok{"Boxplot dei Residui Standardizzati"}\NormalTok{, }\AttributeTok{y =} \StringTok{"Residui Standardizzati"}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{theme\_minimal}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\pandocbounded{\includegraphics[keepaspectratio]{Esercizio3_files/figure-latex/outlier_detection-1.pdf}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Identificazione degli outlier}
+\NormalTok{outliers }\OtherTok{\textless{}{-}}\NormalTok{ data2[}\FunctionTok{abs}\NormalTok{(data2}\SpecialCharTok{$}\NormalTok{std\_residuals) }\SpecialCharTok{\textgreater{}} \DecValTok{2}\NormalTok{, ]}
+\NormalTok{outliers}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##     nazione densita urbana vitafem vitamas alfabet   pil relig residuals
+## 12   Canada       3     77      81      74      97 19904  Catt  10317.24
+## 60 Svizzera     170     62      82      75      99 22384  Catt  12392.91
+##    std_residuals
+## 12      2.082929
+## 60      2.505929
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Rimozione degli outlier dal dataset}
+\NormalTok{data2\_no\_outliers }\OtherTok{\textless{}{-}}\NormalTok{ data2[}\FunctionTok{abs}\NormalTok{(data2}\SpecialCharTok{$}\NormalTok{std\_residuals) }\SpecialCharTok{\textless{}=} \DecValTok{2}\NormalTok{, ]}
+\CommentTok{\# Ricalcolo del modello senza outlier}
+\NormalTok{lin\_mod4\_no\_outliers }\OtherTok{\textless{}{-}} \FunctionTok{lm}\NormalTok{(pil }\SpecialCharTok{\textasciitilde{}}\NormalTok{ vitafem }\SpecialCharTok{+}\NormalTok{ relig, }\AttributeTok{data =}\NormalTok{ data2\_no\_outliers)}
+\FunctionTok{summary}\NormalTok{(lin\_mod4\_no\_outliers)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+## Call:
+## lm(formula = pil ~ vitafem + relig, data = data2_no_outliers)
+## 
+## Residuals:
+##     Min      1Q  Median      3Q     Max 
+## -6772.9 -3561.6  -702.5  2712.3 10497.2 
+## 
+## Coefficients:
+##              Estimate Std. Error t value Pr(>|t|)    
+## (Intercept) -15106.88    4475.00  -3.376 0.001296 ** 
+## vitafem        366.84      58.43   6.279 4.19e-08 ***
+## religCatt    -5974.67    1363.87  -4.381 4.82e-05 ***
+## religOrt     -7729.60    1997.17  -3.870 0.000271 ***
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## Residual standard error: 4653 on 60 degrees of freedom
+## Multiple R-squared:  0.533,  Adjusted R-squared:  0.5096 
+## F-statistic: 22.82 on 3 and 60 DF,  p-value: 5.576e-10
+\end{verbatim}
+
+\#A partire dal modello al punto c calcolare il PIL predetto per una
+nazione a prevalenza cattolica con aspettativa di vita pari a 82 anni
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{new\_data }\OtherTok{\textless{}{-}} \FunctionTok{data.frame}\NormalTok{(}\AttributeTok{vitafem =} \DecValTok{82}\NormalTok{, }\AttributeTok{relig =} \StringTok{"Catt"}\NormalTok{)}
+\NormalTok{predicted\_pil }\OtherTok{\textless{}{-}} \FunctionTok{predict}\NormalTok{(lin\_mod4\_no\_outliers, }\AttributeTok{newdata =}\NormalTok{ new\_data)}
+\NormalTok{predicted\_pil}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##      1 
+## 8999.3
+\end{verbatim}
+
+\end{document}
