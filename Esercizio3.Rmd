@@ -94,3 +94,38 @@ for (i in seq_along(models)) {
 # Resetting the plotting layout
 par(mfrow = c(1, 1))
 ```
+
+
+##Parte 2
+**Importing the dataset**
+```{r import_data_part2}
+data2 <- read.csv("https://raw.githubusercontent.com/marcel0501/Esercizi-Mod-Stat/refs/heads/main/nazioni.csv", sep=";")
+```
+
+```{r scatter_plot}
+numeric <- unlist(lapply(data2, is.numeric))
+library(psych)
+library(corrplot)
+# Scatter plot all the variables
+pairs.panels(data2[,numeric], lm=T)
+par(mfrow=c(1,1))
+
+Corr <- round(cor(data2[,numeric]), 3)
+corrplot(Corr, method="number")
+
+summary(data2)
+
+freq_table <- table(data2$relig)
+barplot(freq_table, main="Distribuzione delle Religioni", xlab="Religione", ylab="Frequenza", col=rainbow(length(freq_table)))
+```
+**Regression on PIL with density, urban, maleexp, femexp, religion**
+```{r regression_pil}
+table(data2$relig)
+data2$relig <- factor(data2$relig)
+data2$relig
+model0 <- lm(pil ~ densita + urbana + vitamas + vitafem + relig, data = data2)
+summary(model0)
+require(moldel0)
+install.packages("SparseM")
+
+```
